@@ -33,9 +33,32 @@
 Để chạy service:
 
 ```
-dotnet run
+dotnet run --project src/NoteService.Api/NoteService.Api.csproj
 ```
 
+Health check:
+
+```
+GET /health
+```
+
+## Cấu trúc solution
+
+- `src/NoteService.Api` — ASP.NET Core API host
+- `src/NoteService.Domain` — domain entities/business rules
+- `src/NoteService.Application` — application/use-case layer
+- `src/NoteService.Infrastructure` — infrastructure integrations
+- `src/NoteService.Contracts` — API DTOs/contracts
+- `src/NoteService.Shared` — shared primitives/utilities
+- `tests/NoteService.UnitTests` — unit tests
+- `tests/NoteService.IntegrationTests` — integration tests
+
+## Kiểm tra build/test
+
+```
+dotnet build NoteService.sln
+dotnet test NoteService.sln
+```
 
 ## Công nghệ sử dụng
 
