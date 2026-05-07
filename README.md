@@ -25,15 +25,33 @@
    dotnet restore
    ```
 
-3. Cấu hình biến môi trường (nếu cần):
-   Tạo file `appsettings.json` hoặc sử dụng biến môi trường cho database connection, JWT secret, v.v.
+3. Cấu hình Notes database riêng (`notes_db`):
+   - Ưu tiên dùng `ConnectionStrings:NotesConnection`
+   - Hoặc cấu hình qua env:
+     - `DATABASE_INTERNAL_HOST`
+     - `DATABASE_INTERNAL_PORT`
+     - `DATABASE_INTERNAL_USER`
+     - `DATABASE_INTERNAL_PASSWORD`
+   - Service sẽ luôn ép tên database là `notes_db` khi build connection string từ env để tránh đọc/ghi nhầm monolith DB.
+   - Có thể tham khảo `appsettings.example.json`.
+
+4. Tạo migration / apply schema:
+   ```
+   dotnet ef database update --project src/NoteService.Infrastructure/NoteService.Infrastructure.csproj --context NotesDbContext
+   ```
 
 ## Chạy ứng dụng
 
-Để chạy service:
+Để chạy test hiện có:
 
 ```
-dotnet run
+dotnet test
+```
+
+Để khởi tạo migration mới:
+
+```
+dotnet ef migrations add <MigrationName> --project src/NoteService.Infrastructure/NoteService.Infrastructure.csproj --context NotesDbContext --output-dir Persistence/Migrations
 ```
 
 
